@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="data.js" defer></script>
+  <script src="renderer.js" defer></script>
+</head>
+<body>
+  <header>
+    <div id="settings">
+      <label for="felvetelTipusa">Felvétel typusa szerint</label>
+	  <select id="felvetelTipusa" onchange="keres()">
+		<option value="mind">Minden</option>
+		<option value="K" selected>Kötelező</option>
+		<option value="KV">Kötelezően Választható</option>
+		<option value="SZV">Szabadon Választható</option>
+	  </select>
+	  <label for="kategoria">Tárgycsoport</label>
+	  <select id="kategoria" onchange="keres()">
+		<option value="mind" selected>Minden</option>
+		<option value="T">Természettudományi Alapismeretek</option>
+		<option value="SZT">Szakmai Törzsanyag</option>
+		<option value="D">Differenciált Szaktárgyak</option>
+		<option value="D_B">Biológia blokktárgyak</option>
+		<option value="D_F">Fizika blokktárgyak</option>
+		<option value="D_K">Kémia blokktárgyak</option>
+		<option value="D_I">Informatika blokktárgyak</option>
+		<option value="G">Gazdasági és Humán Ismeretek</option>
+	  </select>
+	  <label for="felev">Ajánlott félév</label>
+	  <select id="felev" onchange="keres()">
+		<option value="mind" selected>Minden</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+	  </select>
+	  <label for="targynev">Tárgynév</label>
+	  <input id="targynev" value="" type="text" oninput="keres()">
+    </div>
+  </header>
+  <main>
+     <svg id="drawArea" width="1800" height="1400"></svg>
+
+	
+  </main>
+  
+  
+</body>
+</html>
