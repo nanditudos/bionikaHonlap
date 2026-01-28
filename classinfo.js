@@ -1,6 +1,19 @@
 const params = new URLSearchParams(document.location.search);
 const c = params.get("c");
 
+async function submitComment() {
+	addItem({"type":"class","for":c,"text":document.getElementById("commentText").value,"rating":document.getElementById("rating").value})
+}
+
+async function renderComments(name) {
+	const allComments = await getAllItems()
+	allComments.forEach(function (e) {
+		if (e["data"]["type"]=="class"&&e["data"]["for"]==c) {
+			document.getElementById("listedComments").innerHTML+=`<pre>${`${{"0":"","1":"Rating: ▲\n","-1":"Rating: ▼\n"}[e["data"]["rating"]]}`}${e["data"]["text"]}</pre>`
+		}
+	});
+}
+
 if (c === null) {
 	console.error(`Invalid format.`)
 } else {
@@ -23,6 +36,7 @@ if (c === null) {
 		document.getElementById("tanarok").innerHTML=cdata["teachers"].join(", ");
 		document.getElementById("leiras").innerHTML=cdata["description"];
 		document.getElementById("kotelezo").innerHTML={"K":"Kötelező","KV":"Kötelezően Választható","SZV":"Szabadon Választható","U":"Egyéb"}[cdata["category"]];
+		renderComments()
 	}
 }
 

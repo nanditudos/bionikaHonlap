@@ -1,8 +1,9 @@
-function shortDescription(c) {
+async function shortDescription(c) {
 	const cdata=getClass(c)
-	return `<p><a href="classinfo.html?c=${cdata["name"]}">${cdata["displayName"]}</a> ; Ajánlott félév: ${cdata["primarySemester"]} ; ${generateClassTypeListShort(cdata["credits"]).join("+")} ; ${generateNonNullList(cdata["credits"]).join("+")} kr</p>`
+	const rating=await getRatingOf(c)
+	return `<p><a href="classinfo.html?c=${cdata["name"]}">${cdata["displayName"]}</a> ${rating==0?"":(rating<0?`(▼${-rating})`:`(▲${rating})`)} ; Ajánlott félév: ${cdata["primarySemester"]} ; ${generateClassTypeListShort(cdata["credits"]).join("+")} ; ${generateNonNullList(cdata["credits"]).join("+")} kr</p>`
 }
-function keres() {
+async function keres() {
 	let matched=[]
 	//selecting classes matching prerequisites
 	data["classes"].forEach(function (v) {
@@ -40,7 +41,7 @@ function keres() {
 	let out=""
 	out+=`<table>`
 	for (let i=0; i<matched.length; i++) {
-		out+=`<tr><td>${shortDescription(matched[i])}</td></tr>`
+		out+=`<tr><td>${await shortDescription(matched[i])}</td></tr>`
 	}
 	out+=`</table>`
 	document.getElementById("listArea").innerHTML=out
