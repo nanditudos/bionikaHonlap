@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Órák listanézetben</title>
   <link href="style.css" rel="stylesheet" />
   <script src="data.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
@@ -10,56 +10,79 @@
   <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-firestore.js"></script>
   <script src="firebase.js" defer></script>
   <script src="classlist.js" defer></script>
-  
 </head>
 <body>
-  <header>
-	<a href="classlist.html">Tárgyke listanézetben</a><a href="index.html">Tárgyek előmeneteli ábra nézetben</a><br>
-    <div id="settings">
-      <label for="felvetelTipusa">Felvétel typusa szerint</label>
-	  <select id="felvetelTipusa" onchange="keres()">
-		<option value="mind" selected>Minden</option>
-		<option value="K">Kötelező</option>
-		<option value="KV">Kötelezően Választható</option>
-		<option value="SZV">Szabadon Választható</option>
-	  </select>
-	  <label for="kategoria">Tárgycsoport</label>
-	  <select id="kategoria" onchange="keres()">
-		<option value="mind" selected>Minden</option>
-		<option value="T">Természettudományi Alapismeretek</option>
-		<option value="SZT">Szakmai Törzsanyag</option>
-		<option value="D">Differenciált Szaktárgyak</option>
-		<option value="D_B">Biológia blokktárgyak</option>
-		<option value="D_F">Fizika blokktárgyak</option>
-		<option value="D_K">Kémia blokktárgyak</option>
-		<option value="D_I">Informatika blokktárgyak</option>
-		<option value="G">Gazdasági és Humán Ismeretek</option>
-	  </select>
-	  <label for="felev">Ajánlott félév</label>
-	  <select id="felev" onchange="keres()">
-		<option value="mind" selected>Minden</option>
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		<option value="6">6</option>
-		<option value="7">7</option>
-	  </select>
-	  <label for="targynev">Tárgynév</label>
-	  <input id="targynev" value="" type="text" oninput="keres()">
-	  <label for="rendezes">Rendezés</label>
-	  <select id="rendezes" onchange="keres()">
-		<option value="ABC+" selected>ABC szerint növekvő</option>
-		<option value="ABC-">ABC szerint csökkenő</option>
-	  </select>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        Molekuláris Bionika Mérnöki BSc
+      </div>
+
+      <nav class="navlinks">
+        <a href="classlist.html">Tárgyak listanézetben</a>
+        <a href="index.html">Tárgyak előmeneteli ábra nézetben</a>
+      </nav>
+    </div>
+
+    <div id="settings" class="filters">
+      <div class="filter-group">
+        <label for="felvetelTipusa">Felvétel típusa</label>
+        <select id="felvetelTipusa" onchange="keres()">
+          <option value="mind" selected>Minden</option>
+          <option value="K">Kötelező</option>
+          <option value="KV">Kötelezően választható</option>
+          <option value="SZV">Szabadon választható</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="kategoria">Tárgycsoport</label>
+        <select id="kategoria" onchange="keres()">
+			<option value="mind" selected>Minden</option>
+			<option value="T">Természettudományi Alapismeretek</option>
+			<option value="SZT">Szakmai Törzsanyag</option>
+			<option value="D">Differenciált Szaktárgyak</option>
+			<option value="D_B">Biológia blokktárgyak</option>
+			<option value="D_F">Fizika blokktárgyak</option>
+			<option value="D_K">Kémia blokktárgyak</option>
+			<option value="D_I">Informatika blokktárgyak</option>
+			<option value="G">Gazdasági és Humán Ismeretek</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="felev">Ajánlott félév</label>
+        <select id="felev" onchange="keres()">
+          <option value="mind" selected>Minden</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+      </div>
+
+      <div class="filter-group grow">
+        <label for="targynev">Tárgynév</label>
+        <input id="targynev" type="text" oninput="keres()">
+      </div>
+
+      <div class="filter-group">
+        <label for="rendezes">Rendezés</label>
+        <select id="rendezes" onchange="keres()">
+          <option value="ABC+" selected>ABC növekvő</option>
+          <option value="ABC-">ABC csökkenő</option>
+        </select>
+      </div>
     </div>
   </header>
-  <main>
-    <div id="listArea"></div>
-	
+
+  <main class="content">
+    <div id="listArea" class="list-area"></div>
   </main>
-  
-  
+
 </body>
 </html>

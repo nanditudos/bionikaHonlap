@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title></title>
   <link href="style.css" rel="stylesheet" />
+
   <script src="data.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-auth.js"></script>
@@ -12,36 +13,68 @@
   <script src="classinfo.js" defer></script>
 </head>
 <body>
-  <header>
-  <a href="classlist.html">Tárgyke listanézetben</a><a href="index.html">Tárgyek előmeneteli ábra nézetben</a>
-  </header>
-  <main>
-    <div id="renderArea">
-	  <p>Név: <span id="nev"></span></p>
-	  <p>Típus: <span id="tipus"></span></p>
-	  <p>Kredit: <span id="kredit"></span></p>
-	  <p>Heti óraszám: <span id="orak"></span></p>
-	  <p>Ajánlott félév: <span id="felev"></span> <span id="masodlagosFelev"></span></p>
-	  <p>Előfeltételek: <span id="elofeltetel"></span></p>
-	  <p>Tanárok: <span id="tanarok"></span></p>
-	  <p>Felvétel típusa: <span id="kotelezo"></span></p>
-	  <p>Leírás</p>
-	  <div id="leiras"></div>
-	  <div id="commentspace">
-		<div id="submitComment">
-		  <label for="rating">Értékelés</label>
-		  <select id="rating">
-		    <option value="1">Jó</option>
-			<option value="0" selected>Nem értékelt</option>
-			<option value="-1">Rossz</option>
-		  </select><br>
-		  <textarea id="commentText"></textarea><br>
-		  <button id="submit" onclick="submitComment()">Rögzít</button>
-		</div>
-		<div id="listedComments"></div>
-	  </div>
-	</div>
-  </main>
-  
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Molekuláris Bionika Mérnöki BSc</div>
+    <nav class="navlinks">
+      <a href="classlist.html">Tárgyak listanézetben</a>
+      <a href="index.html">Tárgyak előmeneteli ábra nézetben</a>
+    </nav>
+  </div>
+</header>
+
+<main class="content">
+
+  <section id="renderArea" class="card">
+
+    <h1 class="subject-title" id="nev"></h1>
+
+    <div class="info-grid">
+      <div><span class="label">Típus</span><span id="tipus"></span></div>
+      <div><span class="label">Kredit</span><span id="kredit"></span></div>
+      <div><span class="label">Heti óraszám</span><span id="orak"></span></div>
+      <div><span class="label">Ajánlott félév</span>
+        <span id="felev"></span> <span id="masodlagosFelev"></span>
+      </div>
+      <div><span class="label">Felvétel típusa</span><span id="kotelezo"></span></div>
+      <div><span class="label">Tanárok</span><span id="tanarok"></span></div>
+      <div class="wide">
+        <span class="label">Előfeltételek</span>
+        <span id="elofeltetel"></span>
+      </div>
+    </div>
+
+    <section class="description">
+      <h2>Leírás</h2>
+      <div id="leiras"></div>
+    </section>
+
+    <section id="commentspace" class="comments">
+
+      <div id="submitComment" class="comment-form">
+        <h2>Értékelés hozzáadása</h2>
+
+        <label for="rating">Értékelés</label>
+        <select id="rating">
+          <option value="1">Jó</option>
+          <option value="0" selected>Nem értékelt</option>
+          <option value="-1">Rossz</option>
+        </select>
+
+        <label for="commentText">Megjegyzés</label>
+        <textarea id="commentText" rows="4"></textarea>
+
+        <button id="submit" onclick="submitComment()">Rögzít</button>
+      </div>
+
+      <div id="listedComments" class="comment-list"></div>
+
+    </section>
+
+  </section>
+
+</main>
+
 </body>
 </html>

@@ -40,6 +40,7 @@ function keres() {
 	const colorScheme = {"U":"#ffffff","M":"#bdbdbd","G":"#ffd7cb","K":"#b6c7db","F":"#ffb56c","B":"#abcf91","I":"#ffffa5"}
 	let out=""
 	//rendering connections
+	out+=`<rect width="100%" height="100%" fill="white"/>`
 	data["connections"].forEach(function (v) {
 		if (matched.includes(v["source"])&&matched.includes(v["destination"])) {
 			const posSource = getClass(v["source"])["position"];

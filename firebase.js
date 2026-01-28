@@ -14,17 +14,17 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 async function addItem(data) {
-  db.collection("comments").add({"timestamp":0,"data":data})
+  db.collection("comments").add({"timestamp":new Date().getTime(),"data":data})
 }
 
 let savedcomments = null
-async function getAllItems() {
-  if (savedcomments != null) return savedcomments
+async function getAllItems(forceReload=false) {
+  if (savedcomments != null && !forceReload) return savedcomments
   const snapshot = await db.collection("comments").get();
   let comments = []
   snapshot.forEach(doc => {
     const data = doc.data();
-    comments.push({ id: doc.id, name: data.name, data: data.data });
+    comments.push({ id: doc.id, name: data.name, data: data.data ,timestamp: data.timestamp});
   });
   savedcomments=comments
   return comments
