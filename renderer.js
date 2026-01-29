@@ -1,9 +1,26 @@
-function estimateFontSize(t) {
-	let m = 0
+function estimateFontSize(t,wmax=22) {
+	let lengthScore = 0
 	for (let i=0; i<t.length; i++) {
-		if (t[i]=="m") m++
+		if (["i","í","j","l","t","f"," ","I","Í","-",","].includes(t[i])) lengthScore+=0.5
+		if (["a","á","b","c","d","e","é","g","h","k","n","o","ó","ő","ö","p","q","r","s","u","ú","ü","ű","v","x","y","z"].includes(t[i])) lengthScore+=1
+		if (["m","w","A","Á","B","C","D","E","É","F","G","H","J","K","L","M","N","O","Ó","Ö","Ő","P","Q","R","S","T","U","Ú","Ü","Ű","V","W","X","Y","Z"].includes(t[i])) lengthScore+=1.5
 	}
-	return Math.min(24,Math.floor(17/(t.length+m)*24))
+	return Math.min(wmax,Math.floor(15*22/lengthScore))
+}
+function separateText(t) {
+	let separator=0
+	for (let i=0; i<t.length/2; i++) {
+		if (t[Math.floor(t.length/2)+i]==" ") {
+			separator = Math.floor(t.length/2)+i;
+			break;
+		}
+		if (t[Math.floor(t.length/2)-i]==" ") {
+			separator = Math.floor(t.length/2)-i;
+			break;
+		}
+	}
+	if (separator==0) console.log(t)
+	return [t.substring(0,separator),t.substring(separator+1)]
 }
 
 function keres() {
@@ -37,7 +54,7 @@ function keres() {
 	const verticalBlock = 50
 	const horizontalEmpty = 20
 	const horizontalBlock = 200
-	const colorScheme = {"U":"#ffffff","M":"#bdbdbd","G":"#ffd7cb","K":"#b6c7db","F":"#ffb56c","B":"#abcf91","I":"#ffffa5"}
+	const colorScheme = {"U":"#ffffff","M":"#bdbdbd","G":"#ffd7cb","K":"#b6c7db","F":"#ffb56c","B":"#abcf91","I":"#fafa90"}
 	let out=""
 	//rendering connections
 	out+=`<rect width="100%" height="100%" fill="white"/>`
@@ -68,7 +85,16 @@ function keres() {
 		const y = cdata["position"]["y"]
 		out+=`<a href="classinfo.html?c=${cdata["name"]}" target="_blank">`
 		out+=`<rect x="${horizontalEmpty+(horizontalEmpty+horizontalBlock)*x}" y="${verticalEmpty+(verticalEmpty+verticalBlock)*y}" width="${horizontalBlock}" height="${verticalBlock}" fill="${colorScheme[cdata["origin"]]}" />`
-		out+=`<text x="${1*horizontalEmpty+0.5*horizontalBlock+(horizontalEmpty+horizontalBlock)*x}" y="${1*verticalEmpty+0.33*verticalBlock+(verticalEmpty+verticalBlock)*y}" text-anchor="middle" dominant-baseline="middle" font-size="${estimateFontSize(cdata["displayName"])}" font-family="sans-serif" font-weight="bold" fill="black">${cdata["displayName"]}</text>`
+		const fontSize = estimateFontSize(cdata["displayName"])
+		if (fontSize>=15) {
+			out+=`<text x="${1*horizontalEmpty+0.5*horizontalBlock+(horizontalEmpty+horizontalBlock)*x}" y="${1*verticalEmpty+0.33*verticalBlock+(verticalEmpty+verticalBlock)*y}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-family="sans-serif" font-weight="bold" fill="black">${cdata["displayName"]}</text>`
+		} else {
+			const substrings = separateText(cdata["displayName"])
+			const newFontsize = Math.min(estimateFontSize(substrings[0],15),estimateFontSize(substrings[1],15))
+			out+=`<text x="${1*horizontalEmpty+0.5*horizontalBlock+(horizontalEmpty+horizontalBlock)*x}" y="${1*verticalEmpty+0.25*verticalBlock+(verticalEmpty+verticalBlock)*y}" text-anchor="middle" dominant-baseline="middle" font-size="${newFontsize}" font-family="sans-serif" font-weight="bold" fill="black">${substrings[0]}</text>`
+			out+=`<text x="${1*horizontalEmpty+0.5*horizontalBlock+(horizontalEmpty+horizontalBlock)*x}" y="${1*verticalEmpty+0.5*verticalBlock+(verticalEmpty+verticalBlock)*y}" text-anchor="middle" dominant-baseline="middle" font-size="${newFontsize}" font-family="sans-serif" font-weight="bold" fill="black">${substrings[1]}</text>`
+		}
+		
 		out+=`<text x="${1*horizontalEmpty+0.5*horizontalBlock+(horizontalEmpty+horizontalBlock)*x}" y="${1*verticalEmpty+0.78*verticalBlock+(verticalEmpty+verticalBlock)*y}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="sans-serif" font-weight="bold" fill="red">${generateClassTypeListShort(cdata["credits"]).join("+")}</text>`
 		out+=`</a>`
 	}

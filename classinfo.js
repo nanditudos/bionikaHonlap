@@ -79,7 +79,12 @@ if (c === null) {
 		document.getElementById("kredit").innerHTML=generateNonNullList(cdata["credits"]).join("+");
 		document.getElementById("orak").innerHTML=generateNonNullList(cdata["hours"]).join("+");
 		if (cdata["primarySemester"] != null) document.getElementById("felev").innerHTML=cdata["primarySemester"];
-		if (cdata["secondarySemesters"].length>0) document.getElementById("masodlagosFelev").innerHTML=`(${cdata["secondarySemesters"].join(", ")})`;
+		if (cdata["secondarySemesters"].length) {
+			if (cdata["secondarySemesters"].length=="paros") document.getElementById("masodlagosFelev").innerHTML=`(páros félévekben)`;
+			else if (cdata["secondarySemesters"].length=="paratlan") document.getElementById("masodlagosFelev").innerHTML=`(páaratlan félévekben)`;
+			else if (cdata["secondarySemesters"].length=="minden") document.getElementById("masodlagosFelev").innerHTML=`(minden félévben)`;
+			else if (cdata["secondarySemesters"].length>0) document.getElementById("masodlagosFelev").innerHTML=`(${cdata["secondarySemesters"].join(", ")})`;
+		}
 		let elofeltetelLista=[];
 		cdata["dependencies"].forEach(function (e) {
 			elofeltetelLista.push(`<a href="classinfo.html?c=${e}">${getClass(e)["displayName"]}</a>`);

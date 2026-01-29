@@ -168,7 +168,6 @@ input:focus {
 /* Column-specific alignment */
 .col-semester,
 .col-credit {
-  text-align: center;
   white-space: nowrap;
 }
 
